@@ -13,8 +13,6 @@ API RESTful para listagem e consulta de artigos. Desenvolvida com Node.js, Expre
 - [Docker Compose](https://docs.docker.com/compose/)
 - JavaScript (ES6+)
 
----
-
 ## 📁 Estrutura do projeto
 
 Article-api/
@@ -30,8 +28,6 @@ Article-api/
 ├── docker-compose.yml
 ├── .dockerignore
 ├── package.json
-
----
 
 ## 🚀 Como rodar o projeto
 
