@@ -11,27 +11,9 @@ API RESTful para listagem e consulta de artigos. Desenvolvida com Node.js, Expre
 - [SQLite](https://www.sqlite.org/index.html)
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+- [Jest](https://jestjs.io/)
+- [Supertest](https://github.com/visionmedia/supertest)
 - JavaScript (ES6+)
-
----
-
-## 📁 Estrutura do projeto
-
-Article-api/
-├── src/
-│ ├── controller/ # Controllers da aplicação
-│ ├── repository/ # Lógica de acesso ao banco (DAO)
-│ ├── route/ # Definição das rotas
-│ ├── utils/ # Utilitários (ex: cache)
-│ ├── migrations/ # Migrations de banco de dados
-│ ├── app.js # Inicialização da aplicação
-│ ├── database.js # Conexão com o SQLite
-├── Dockerfile
-├── docker-compose.yml
-├── .dockerignore
-├── package.json
-
----
 
 ## 🚀 Como rodar o projeto
 
@@ -43,7 +25,7 @@ Antes de iniciar, você precisa ter instalado:
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-- Obs.: Projeto foi feito no Windows 11
+ℹ️ Obs.: Projeto foi feito no Windows 11
 
 ---
 
@@ -51,7 +33,7 @@ Antes de iniciar, você precisa ter instalado:
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/Rafael-Antunes-Brasil/articles-api.git
+git clone https://github.com/Rafael-Antunes-Brasil/articles-api
 cd articles-api
 
 # Subir os containers
@@ -66,6 +48,14 @@ GET /:id → Retorna artigo por ID
 🗃️ Banco de Dados
 O projeto utiliza SQLite com o arquivo database.sqlite.
 Migrations são executadas automaticamente ao subir o projeto.
+Durante os testes, é utilizado SQLite em memória para isolamento.
 
-🧪 Testes
-(Se houver testes futuramente, adicionar aqui)
+🧪 Testes de Integração
+O projeto inclui testes de integração para controller e repository usando:
+Jest (framework de testes)
+Supertest (requisições simuladas)
+SQLite em memória (ambiente limpo por teste)
+
+▶️ Executar os testes:
+npm install
+npm test
