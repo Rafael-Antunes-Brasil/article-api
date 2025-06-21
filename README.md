@@ -15,19 +15,23 @@ API RESTful para listagem e consulta de artigos. Desenvolvida com Node.js, Expre
 
 ## 📁 Estrutura do projeto
 
-Article-api/
+ARTICLES-API/
 ├── src/
-│ ├── controller/ # Controllers da aplicação
-│ ├── repository/ # Lógica de acesso ao banco (DAO)
-│ ├── route/ # Definição das rotas
-│ ├── utils/ # Utilitários (ex: cache)
-│ ├── migrations/ # Migrations de banco de dados
-│ ├── app.js # Inicialização da aplicação
-│ ├── database.js # Conexão com o SQLite
-├── Dockerfile
-├── docker-compose.yml
+│   ├── controller/           # Controllers da aplicação
+│   ├── repository/           # Acesso ao banco de dados (DAO)
+│   ├── route/                # Definição das rotas
+│   ├── utils/                # Utilitários (ex: cache)
+│   ├── migrations/           # Migrations do banco de dados
+│   ├── app.js                # Inicialização da aplicação
+│   ├── database.js           # Conexão com o SQLite (modo async)
+│   ├── db.js                 # (opcional, pode ser o SQLite tradicional)
 ├── .dockerignore
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
 ├── package.json
+├── README.md
+
 
 ## 🚀 Como rodar o projeto
 
