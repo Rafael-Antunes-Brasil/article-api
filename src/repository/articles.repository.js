@@ -21,7 +21,6 @@ const findAll = async () => {
     `);
 
     setCache(ARTICLES_CACHE_KEY, articles);
-
     return articles;
   } catch (error) {
     console.error('Erro ao buscar artigos:', error);

@@ -1,26 +1,10 @@
-const { connect } = require('../../database');
+const { setupInMemoryDb } = require('../../utils/setupInMemoryDb');
 const articleRepository = require('../articles.repository');
 
 let db;
 
 beforeAll(async () => {
-    db = await connect(':memory:');
-    await db.exec(`
-        CREATE TABLE IF NOT EXISTS articles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        resume TEXT NOT NULL,
-        author TEXT NOT NULL,
-        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-        publishDate DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    `);
-
-    await db.run(`
-        INSERT INTO articles (title, content, resume, author) VALUES
-        ('Test Repo', 'Repo Content', 'Repo Resume', 'Repo Author');
-    `);
+    db = await setupInMemoryDb();
 });
 
 describe('articleRepository.findAll', () => {
@@ -28,5 +12,22 @@ describe('articleRepository.findAll', () => {
         const result = await articleRepository.findAll();
         expect(Array.isArray(result)).toBe(true);
         expect(result.length).toBeGreaterThan(0);
+    });
+});
+
+describe('findById', () => {
+    it('deve retornar o artigo com ID existente', async () => {
+        const article = await articleRepository.findById(1);
+        expect(article).toBeDefined();
+        expect(article.title).toBe('Teste');
+    });
+
+    it('deve retornar undefined para ID inexistente', async () => {
+        const article = await articleRepository.findById(999);
+        expect(article).toBeUndefined();
+    });
+
+    it('deve lançar erro se o ID for inválido (SQL injection ou erro)', async () => {
+        await expect(articleRepository.findById('abc')).rejects.toThrow();
     });
 });

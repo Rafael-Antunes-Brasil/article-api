@@ -1,39 +1,41 @@
 const request = require('supertest');
-const express = require('express');
-const { connect } = require('../../database');
-const articlesRoutes = require('../../route/articles.route');
+const { setupInMemoryDb } = require('../../utils/setupInMemoryDb');
+const articleController = require('../articles.controller');
 
 let app, db;
 
 beforeAll(async () => {
-    db = await connect(':memory:');
-
-    await db.exec(`
-        CREATE TABLE IF NOT EXISTS articles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL,
-        resume TEXT NOT NULL,
-        author TEXT NOT NULL,
-        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-        publishDate DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    `);
-
-    await db.run(`
-        INSERT INTO articles (title, content, resume, author) VALUES
-        ('Test Article', 'Content', 'Resume', 'Author');
-    `);
-
-    app = express();
-    app.use(express.json());
-    app.use('/', articlesRoutes);
+    db = await setupInMemoryDb();
 });
 
-describe('GET /', () => {
+describe('articleController.findAllArticles', () => {
     it('deve retornar a lista de artigos', async () => {
-        const res = await request(app).get('/');
+        const res = await articleController.findAllArticles();
         expect(res.statusCode).toBe(200);
         expect(res.body.length).toBeGreaterThan(0);
+    });
+});
+
+describe('GET /:id', () => {
+    it('deve retornar o artigo existente', async () => {
+        const res = await articleController.findArticleById(1);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('id', 1);
+        expect(res.body).toHaveProperty('title', 'Título 1');
+    });
+
+    it('deve retornar 404 para artigo não encontrado', async () => {
+        const res = await request(app).get('/999');
+
+        expect(res.status).toBe(404);
+        expect(res.body).toEqual({ error: 'Artigo não encontrado' });
+    });
+
+    it('deve retornar 500 para ID inválido', async () => {
+        const res = await request(app).get('/abc');
+
+        expect(res.status).toBe(500);
+        expect(res.body).toEqual({ error: 'Id do artigo inválido!' });
     });
 });
