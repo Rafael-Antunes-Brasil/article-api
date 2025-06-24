@@ -1,7 +1,6 @@
 const { setupInMemoryDb } = require('../../utils/setupInMemoryDb');
 const articleRepository = require('../articles.repository');
 
-// Mocka o cache para isolar nos testes
 jest.mock('../../utils/cache', () => ({
     getFromCache: jest.fn(),
     setCache: jest.fn(),
@@ -16,10 +15,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-    // Limpa a tabela antes de cada teste para evitar conflito de IDs
     await db.run('DELETE FROM articles');
 
-    // Insere os dados necessários para os testes
     await db.run(`
         INSERT INTO
             articles (id, title, content, resume, author)
