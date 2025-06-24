@@ -1,6 +1,6 @@
 const articleRepository = require('../repository/articles.repository');
 
-async function findAllArticles() {
+async function findAll() {
     try {
         const articles = await articleRepository.findAll();
         return articles;
@@ -9,7 +9,7 @@ async function findAllArticles() {
     }
 }
 
-async function getArticleById(id) {
+async function getById(id) {
     try {
         const articleId = Number(id);
 
@@ -26,6 +26,6 @@ async function getArticleById(id) {
 }
 
 module.exports = {
-    findAllArticles,
-    getArticleById
+    findAll,
+    getById
 };

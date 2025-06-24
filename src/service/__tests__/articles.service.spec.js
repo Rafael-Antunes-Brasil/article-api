@@ -1,40 +1,31 @@
-const request = require('supertest');
-const { setupInMemoryDb } = require('../../utils/setupInMemoryDb');
+const articleService = require('../articles.service');
+const articleRepository = require('../../repository/articles.repository');
 
-let app, db;
+jest.mock('../../repository/articles.repository');
 
-beforeAll(async () => {
-    db = await setupInMemoryDb();
-});
-
-describe('GET /', () => {
-    it('deve retornar a lista de artigos', async () => {
-        const res = await request(app).get('/');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.length).toBeGreaterThan(0);
-    });
-});
-
-describe('GET /:id', () => {
-    it('deve retornar o artigo existente', async () => {
-        const res = await request(app).get('/1');
-
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('id', 1);
-        expect(res.body).toHaveProperty('title', 'Título 1');
+describe('Testes unitários para article.service', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('deve retornar 404 para artigo não encontrado', async () => {
-        const res = await request(app).get('/999');
-
-        expect(res.status).toBe(404);
-        expect(res.body).toEqual({ error: 'Artigo não encontrado' });
+    test('findAll deve retornar lista de artigos', async () => {
+        articleRepository.findAll.mockResolvedValue([{ id: 1, title: 'Artigo Mock' }]);
+        const result = await articleService.findAll();
+        expect(result).toEqual([{ id: 1, title: 'Artigo Mock' }]);
     });
 
-    it('deve retornar 500 para ID inválido', async () => {
-        const res = await request(app).get('/abc');
+    test('getById deve retornar artigo existente', async () => {
+        articleRepository.findById.mockResolvedValue({ id: 1, title: 'Artigo Mock' });
+        const result = await articleService.getById(1);
+        expect(result).toEqual({ id: 1, title: 'Artigo Mock' });
+    });
 
-        expect(res.status).toBe(500);
-        expect(res.body).toEqual({ error: 'Id do artigo inválido!' });
+    test('getById deve lançar erro para id inválido', async () => {
+        await expect(articleService.getById('abc')).rejects.toThrow('Id do artigo inválido!');
+    });
+
+    test('getById deve lançar erro para artigo não encontrado', async () => {
+        articleRepository.findById.mockResolvedValue(undefined);
+        await expect(articleService.getById(999)).rejects.toThrow('Artigo não encontrado');
     });
 });

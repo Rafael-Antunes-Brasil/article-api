@@ -1,6 +1,6 @@
 # 📰 Articles API
 
-API RESTful para listagem e consulta de artigos. Desenvolvida com Node.js, Express, SQLite e Docker.
+API REST para listagem e consulta de artigos. Desenvolvida com Node.js, Express, SQLite e Docker.
 
 ---
 

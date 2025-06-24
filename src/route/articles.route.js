@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { findAllArticles, findArticleById } = require('../controller/articles.controller');
+const { findAll, findById } = require('../controller/articles.controller');
 const router = Router();
 
-router.get('/', findAllArticles);
-router.get('/:id', findArticleById);
+router.get('/articles', findAll);
+router.get('/articles/:id', findById);
 
 module.exports = router;

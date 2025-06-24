@@ -1,17 +1,17 @@
 const articleService = require('../service/articles.service');
 
-const findAllArticles = async (req, res) => {
+const findAll = async (req, res) => {
   try {
-    const articles = await articleService.findAllArticles();
+    const articles = await articleService.findAll();
     res.json(articles);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const findArticleById = async (req, res) => {
+const findById = async (req, res) => {
   try {
-    const article = await articleService.getArticleById(req.params.id)
+    const article = await articleService.getById(req.params.id)
     res.json(article);
   } catch (error) {
     if (error.message === 'Artigo não encontrado') {
@@ -23,6 +23,6 @@ const findArticleById = async (req, res) => {
 };
 
 module.exports = {
-  findAllArticles,
-  findArticleById
+  findAll,
+  findById
 };
