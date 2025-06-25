@@ -39,7 +39,7 @@ describe('articleRepository.findAll', () => {
 
         expect(getFromCache).toHaveBeenCalledWith('all_articles');
         expect(result).toEqual(cachedData);
-        expect(setCache).not.toHaveBeenCalled(); // não salva no cache se já existe
+        expect(setCache).not.toHaveBeenCalled();
     });
 
     it('deve buscar do banco e salvar no cache se cache não existir', async () => {
