@@ -15,8 +15,6 @@ API REST para listagem e consulta de artigos. Desenvolvida com Node.js, Express,
 - [Supertest](https://github.com/visionmedia/supertest)
 - JavaScript (ES6+)
 
-## 🚀 Como rodar o projeto
-
 ### Pré-requisitos
 
 Antes de iniciar, você precisa ter instalado:
@@ -24,17 +22,21 @@ Antes de iniciar, você precisa ter instalado:
 - [Node.js v18+](https://nodejs.org/)
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/)
 
 ℹ️ Obs.: Projeto foi feito no Windows 11
 
 ---
 
-### 🔧 Subindo com Docker
+## 🚀 Como rodar o projeto
 
 ```bash
 # Clonar o repositório
 git clone https://github.com/Rafael-Antunes-Brasil/articles-api
 cd articles-api
+
+# Criar rede docker, para conexão entre api e front
+docker network create projeto-network
 
 # Subir os containers
 docker-compose up -d --build
