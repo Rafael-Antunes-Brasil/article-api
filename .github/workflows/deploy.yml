@@ -42,6 +42,6 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install lftp
 
-      - name: Deploy to Hostinger via FTP
-        run: |
-          lftp -c "set ftp:ssl-allow no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; mirror -R ./ ./ --exclude-glob node_modules --exclude .git --exclude .github"
+    #   - name: Deploy
+    #     run: |
+    #       lftp -c "set ftp:ssl-allow no; open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; mirror -R ./ ./ --exclude-glob node_modules --exclude .git --exclude .github"
