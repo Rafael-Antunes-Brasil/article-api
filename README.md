@@ -40,6 +40,7 @@ docker network create projeto-network
 
 # Subir os containers
 docker-compose up -d --build
+
 A aplicação estará disponível em:
 📍 http://localhost:3003/
 
